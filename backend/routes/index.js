@@ -23,6 +23,10 @@ router.post('/signup', celebrate({
       .pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/),
   }).unknown(true),
 }), createUser);
+router.delete('/signout', (req, res, next) => {
+  res.status(202).clearCookie('jwt').send('cookie cleared');
+  next();
+});
 router.use(auth);
 router.use(userRoutes);
 router.use(cardRoutes);

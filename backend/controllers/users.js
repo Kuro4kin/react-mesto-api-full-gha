@@ -139,7 +139,11 @@ const login = (req, res, next) => {
           }
           res
             .status(HTTP_STATUS_OK)
-            .cookie('jwt', token, { maxAge: 3600000 * 7 * 24, httpOnly: true })
+            .cookie('jwt', token, {
+              maxAge: 3600000 * 7 * 24,
+              httpOnly: true,
+              sameSite: true,
+            })
             .send({ message: 'Authorization completed' });
         })
         .catch((e) => next(e));

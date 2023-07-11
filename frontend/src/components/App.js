@@ -13,9 +13,7 @@ import Login from "./Login/Login.js";
 import { api } from "../utils/api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import ProtectedRouteElement from "./ProtectedRoute/ProtectedRoute.js";
-import { register } from "../utils/auth.js";
-import { login } from "../utils/auth.js";
-import { checkToken } from "../utils/auth.js";
+import { register, login, unlogin, checkToken } from "../utils/auth.js";
 import InfoTooltip from "./InfoTooltip/InfoTooltip.js";
 import loginOkIcon from "../images/infotooltip-icon-ok.svg";
 import loginErrorIcon from "../images/infotooltip-icon-err.svg";
@@ -38,18 +36,16 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      checkToken(token)
-        .then((res) => {
-          setUserEmail(res.data.email);
-          setLoggedIn(true);
-          navigate("/", { replace: true });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    checkToken()
+      .then((res) => {
+        setUserEmail(res.email);
+        setLoggedIn(true);
+        navigate("/", { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -121,10 +117,9 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
 
-    api
-      .changeLikeCardStatus(card._id, !isLiked)
+    api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
       })
@@ -204,7 +199,6 @@ function App() {
   function handleLogin(formValue) {
     login(formValue)
       .then((res) => {
-        localStorage.setItem("token", res.token);
         setUserEmail(formValue.email)
         setLoggedIn(true);
         navigate("/", { replace: true });
@@ -230,7 +224,7 @@ function App() {
   }
 
   function handleClickSignOutLink() {
-    localStorage.removeItem("token");
+    unlogin();
     setLoggedIn(false);
   }
 

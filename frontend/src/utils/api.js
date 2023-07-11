@@ -14,11 +14,12 @@ class Api {
   }
 
   getInitialUserInfo() {
-    return fetch(this._config.user, {
+    return fetch('http://localhost:3001/users/me', {
       method: "GET",
+      credentials: 'include',
       headers: {
-        authorization: this._config.authorization,
-      },
+        "Content-type": "application/json",
+      },  
     }).then((res) => {
       return this._getResponseData(res);
     });
@@ -27,19 +28,20 @@ class Api {
   getInitialCards() {
     return fetch(this._config.cards, {
       method: "GET",
+      credentials: 'include',
       headers: {
-        authorization: this._config.authorization,
-      },
+        "Content-type": "application/json",
+      }, 
     }).then((res) => {
       return this._getResponseData(res);
     });
   }
 
   editUserInfo(data) {
-    return fetch(this._config.user, {
+    return fetch('http://localhost:3001/users/me', {
       method: "PATCH",
+      credentials: 'include',
       headers: {
-        authorization: this._config.authorization,
         "Content-type": "application/json",
       },
       body: JSON.stringify({
@@ -52,10 +54,10 @@ class Api {
   }
 
   editUserAvatar(data) {
-    return fetch(`${this._config.user}/avatar`, {
+    return fetch(`http://localhost:3001/users/me/avatar`, {
       method: "PATCH",
+      credentials: 'include',
       headers: {
-        authorization: this._config.authorization,
         "Content-type": "application/json",
       },
       body: JSON.stringify({
@@ -69,8 +71,8 @@ class Api {
   createNewCard(data) {
     return fetch(this._config.cards, {
       method: "POST",
+      credentials: 'include',
       headers: {
-        authorization: this._config.authorization,
         "Content-type": "application/json",
       },
       body: JSON.stringify({
@@ -93,8 +95,8 @@ class Api {
   _likeThisCard(cardId) {
     return fetch(`${this._config.cards}/${cardId}/likes`, {
       method: "PUT",
+      credentials: 'include',
       headers: {
-        authorization: this._config.authorization,
         "Content-type": "application/json",
       },
     }).then((res) => {
@@ -105,8 +107,8 @@ class Api {
   _unlikeThisCard(cardId) {
     return fetch(`${this._config.cards}/${cardId}/likes`, {
       method: "DELETE",
+      credentials: 'include',
       headers: {
-        authorization: this._config.authorization,
         "Content-type": "application/json",
       },
     }).then((res) => {
@@ -117,8 +119,8 @@ class Api {
   removeThisCard(card) {
     return fetch(`${this._config.cards}/${card._id}`, {
       method: "DELETE",
+      credentials: 'include',
       headers: {
-        authorization: this._config.authorization,
         "Content-type": "application/json",
       },
     }).then((res) => {

@@ -2,10 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const routes = require('./routes');
 
 const app = express();
-const { PORT = 6000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 mongoose
   .connect('mongodb://127.0.0.1:27017/mestodb', {
@@ -13,6 +14,7 @@ mongoose
   });
 
 app.use(bodyParser.json());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(cookieParser());
 app.use('/', routes);
 app.listen(PORT, () => {
