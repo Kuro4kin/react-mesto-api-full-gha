@@ -14,7 +14,7 @@ class Api {
   }
 
   getInitialUserInfo() {
-    return fetch('http://localhost:3001/users/me', {
+    return fetch('http://localhost:3000/users/me', {
       method: "GET",
       credentials: 'include',
       headers: {
@@ -38,7 +38,7 @@ class Api {
   }
 
   editUserInfo(data) {
-    return fetch('http://localhost:3001/users/me', {
+    return fetch('http://localhost:3000/users/me', {
       method: "PATCH",
       credentials: 'include',
       headers: {
@@ -54,7 +54,7 @@ class Api {
   }
 
   editUserAvatar(data) {
-    return fetch(`http://localhost:3001/users/me/avatar`, {
+    return fetch(`http://localhost:3000/users/me/avatar`, {
       method: "PATCH",
       credentials: 'include',
       headers: {
