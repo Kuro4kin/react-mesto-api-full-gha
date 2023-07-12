@@ -14,7 +14,7 @@ mongoose
   });
 
 app.use(bodyParser.json());
-app.use(cors({ origin: 'http://mesto.kurochkin.nomoredomains.work', credentials: true }));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(cookieParser());
 app.use('/', routes);
 app.listen(PORT, () => {
