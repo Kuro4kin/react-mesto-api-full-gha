@@ -1,5 +1,5 @@
-import apiConfig from "./utils.js";
-
+const BASE_URL = 'http://api.mesto.kurochkin.nomoredomains.work';
+//const BASE_URL = 'http://localhost:3001'
 class Api {
   constructor(config) {
     this._config = config;
@@ -14,7 +14,7 @@ class Api {
   }
 
   getInitialUserInfo() {
-    return fetch('http://localhost:3000/users/me', {
+    return fetch(`${BASE_URL}/users/me`, {
       method: "GET",
       credentials: 'include',
       headers: {
@@ -26,7 +26,7 @@ class Api {
   }
 
   getInitialCards() {
-    return fetch(this._config.cards, {
+    return fetch(`${BASE_URL}/cards`, {
       method: "GET",
       credentials: 'include',
       headers: {
@@ -38,7 +38,7 @@ class Api {
   }
 
   editUserInfo(data) {
-    return fetch('http://localhost:3000/users/me', {
+    return fetch(`${BASE_URL}/users/me`, {
       method: "PATCH",
       credentials: 'include',
       headers: {
@@ -54,7 +54,7 @@ class Api {
   }
 
   editUserAvatar(data) {
-    return fetch(`http://localhost:3000/users/me/avatar`, {
+    return fetch(`${BASE_URL}/users/me/avatar`, {
       method: "PATCH",
       credentials: 'include',
       headers: {
@@ -69,7 +69,7 @@ class Api {
   }
 
   createNewCard(data) {
-    return fetch(this._config.cards, {
+    return fetch(`${BASE_URL}/cards`, {
       method: "POST",
       credentials: 'include',
       headers: {
@@ -93,7 +93,7 @@ class Api {
   }
 
   _likeThisCard(cardId) {
-    return fetch(`${this._config.cards}/${cardId}/likes`, {
+    return fetch(`${BASE_URL}/cards/${cardId}/likes`, {
       method: "PUT",
       credentials: 'include',
       headers: {
@@ -105,7 +105,7 @@ class Api {
   }
 
   _unlikeThisCard(cardId) {
-    return fetch(`${this._config.cards}/${cardId}/likes`, {
+    return fetch(`${BASE_URL}/cards/${cardId}/likes`, {
       method: "DELETE",
       credentials: 'include',
       headers: {
@@ -117,7 +117,7 @@ class Api {
   }
 
   removeThisCard(card) {
-    return fetch(`${this._config.cards}/${card._id}`, {
+    return fetch(`${BASE_URL}/cards/${card._id}`, {
       method: "DELETE",
       credentials: 'include',
       headers: {
@@ -129,4 +129,4 @@ class Api {
   }
 }
 
-export const api = new Api(apiConfig);
+export const api = new Api();
