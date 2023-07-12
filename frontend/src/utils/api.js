@@ -1,5 +1,5 @@
-const BASE_URL = 'http://api.mesto.kurochkin.nomoredomains.work';
-//const BASE_URL = 'http://localhost:3001'
+//const BASE_URL = 'http://api.mesto.kurochkin.nomoredomains.work';
+const BASE_URL = 'http://localhost:3000'
 class Api {
   constructor(config) {
     this._config = config;
