@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { NODE_ENV, JWT_SECRET } = process.env;
 const ConflictError = require('../errors/conflict-error');
 const BadRequestError = require('../errors/bad-request-error');
 const NotFoundError = require('../errors/not-found-error');
@@ -129,7 +130,7 @@ const login = (req, res, next) => {
         next(err);
         return;
       }
-      const token = jwt.sign({ _id: user._id }, 'verysecretword', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'verysecretword', { expiresIn: '7d' });
       bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {

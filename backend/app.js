@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -14,7 +15,7 @@ mongoose
   });
 
 app.use(bodyParser.json());
-app.use(cors({ origin: 'http://mesto.kurochkin.nomoredomains.work', credentials: true }));
+app.use(cors({ origin: 'https://mesto.kurochkin.nomoredomains.work', credentials: true }));
 app.use(cookieParser());
 app.use('/', routes);
 app.listen(PORT, () => {
