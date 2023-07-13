@@ -1,5 +1,5 @@
-const BASE_URL = 'http://api.mesto.kurochkin.nomoredomains.work';
-//const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'https://api.mesto.kurochkin.nomoredomains.work';
+
 const getResponseData = (res) => {
   if (!res.ok) {
     return Promise.reject(res.status);
