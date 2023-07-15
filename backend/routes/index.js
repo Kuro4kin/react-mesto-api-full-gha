@@ -8,6 +8,7 @@ const { login, createUser } = require('../controllers/users');
 const NotFoundError = require('../errors/not-found-error');
 const errorHandler = require('../middlewares/error-handler');
 
+router.use(requestLogger);
 router.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().min(8),
@@ -34,7 +35,6 @@ router.use('*', (req, res, next) => {
   const err = new NotFoundError('The requested information was not found');
   next(err);
 });
-router.use(requestLogger);
 router.use(errorLogger);
 router.use(errors());
 router.use(errorHandler);
