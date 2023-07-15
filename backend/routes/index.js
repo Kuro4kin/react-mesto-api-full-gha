@@ -3,6 +3,7 @@ const { celebrate, Joi, errors } = require('celebrate');
 const { auth } = require('../middlewares/auth');
 const userRoutes = require('./users');
 const cardRoutes = require('./cards');
+const { requestLogger, errorLogger } = require('../middlewares/logger');
 const { login, createUser } = require('../controllers/users');
 const NotFoundError = require('../errors/not-found-error');
 const errorHandler = require('../middlewares/error-handler');
@@ -23,9 +24,8 @@ router.post('/signup', celebrate({
       .pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/),
   }).unknown(true),
 }), createUser);
-router.delete('/signout', (req, res, next) => {
+router.delete('/signout', (req, res) => {
   res.status(202).clearCookie('jwt').send('cookie cleared');
-  next();
 });
 router.use(auth);
 router.use(userRoutes);
@@ -34,6 +34,8 @@ router.use('*', (req, res, next) => {
   const err = new NotFoundError('The requested information was not found');
   next(err);
 });
+router.use(requestLogger);
+router.use(errorLogger);
 router.use(errors());
 router.use(errorHandler);
 
