@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.105.158
+IP-адрес <158.160.105.158>
 
 Frontend https://mesto.kurochkin.nomoredomains.work
 
